@@ -15,8 +15,14 @@ const customProvider = {
       `${apiUrl}/${resource}`
 
     const response = httpClient(url).then(({ json }) => {
+      console.log(json)
+      const filtered = json.map(obj => {
+        // Crea una nueva copia del objeto sin la clave que quieres eliminar
+        const { ["raw_html"]: _, ...newObj } = obj;
+        return newObj;
+      });
       return {
-        data: json,
+        data: filtered,
         total: json.length
       };
     });
